@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heme-Onc Clinical Reference</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f0f2f5;
+    color: #111318;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: #ffffff;
+    border-bottom: 1px solid #ccd0da;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111318;
+    white-space: nowrap;
+  }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+  .specialty-btn {
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1.5px solid #ccd0da;
+    background: transparent;
+    color: #4a5268;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .specialty-btn:hover { background: #f0f2f5; }
+  .specialty-btn.active-heme { background: #e8f0fb; border-color: #1a6fd4; color: #1a6fd4; }
+  .specialty-btn.active-onc  { background: #fbeaea; border-color: #c0392b; color: #c0392b; }
+
+  .hdr-div { color: #ccd0da; margin: 0 2px; }
+
+  select {
+    background: #ffffff;
+    border: 1.5px solid #ccd0da;
+    color: #111318;
+    padding: 5px 28px 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a5268' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    min-width: 220px;
+  }
+  select:focus { outline: none; border-color: #1a6fd4; }
+
+  /* ── EMPTY STATE ── */
+  #empty-state {
+    padding: 80px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #8a93a8;
+    text-align: center;
+  }
+  #empty-state .icon { font-size: 40px; }
+  #empty-state h2 { font-size: 18px; color: #4a5268; font-weight: 600; }
+
+  /* ── PAGE CONTENT ── */
+  #main-content {
+    display: none;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── CONDITION TITLE ── */
+  .condition-title {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .specialty-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .tag-heme { background: #e8f0fb; color: #1a6fd4; border: 1px solid #a8c4ef; }
+  .tag-onc  { background: #fbeaea; color: #c0392b; border: 1px solid #e8a8a8; }
+
+  /* ── TWO-COLUMN GRID ── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: #ffffff;
+    border: 1px solid #ccd0da;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 9px 14px;
+    border-bottom: 1px solid #ccd0da;
+    background: #f7f8fa;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-header h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #4a5268;
+    flex: 1;
+  }
+
+  /* ── MODE TOGGLE ── */
+  .mode-toggle {
+    display: flex;
+    background: #e8eaef;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ccd0da;
+  }
+  .mode-btn {
+    padding: 3px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: #6a7488;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+  }
+  .mode-btn.active { background: #ffffff; color: #111318; }
+  .mode-btn:first-child { border-right: 1px solid #ccd0da; }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid #ccd0da;
+    color: #8a93a8;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { color: #4a5268; border-color: #8a93a8; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #eef0f4;
+    cursor: pointer;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li:hover { background: #f7f8fa; }
+  .checklist li.checked { opacity: 0.45; }
+  .checklist li.checked .item-text { text-decoration: line-through; }
+
+  .checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid #ccd0da;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .checked .checkbox { background: #1a7a4a; border-color: #1a7a4a; }
+  .checkbox::after {
+    content: '';
+    width: 8px; height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+    opacity: 0;
+  }
+  .checked .checkbox::after { opacity: 1; }
+  .item-text { font-size: 14px; line-height: 1.5; color: #111318; }
+
+  /* ── BULLET LIST (Considerations) ── */
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    display: flex;
+    gap: 9px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #eef0f4;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111318;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '·';
+    color: #8a93a8;
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  /* ── RIGHT PANEL COMPONENTS ── */
+  .panel-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #4a5268;
+    padding: 0 2px;
+  }
+
+  .copy-box {
+    background: #ffffff;
+    border: 1px solid #ccd0da;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .copy-box-header {
+    padding: 8px 12px;
+    background: #f7f8fa;
+    border-bottom: 1px solid #ccd0da;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4a5268;
+  }
+  .lab-text {
+    padding: 12px 14px;
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #111318;
+    word-break: break-word;
+  }
+  .copy-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px;
+    background: #1a7a4a;
+    color: #ffffff;
+    border: none;
+    border-top: 1px solid #ccd0da;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: #155e39; }
+  .copy-btn.copied { background: #8a6800; }
+
+  .other-box {
+    background: #ffffff;
+    border: 1px solid #ccd0da;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .other-box-header {
+    padding: 8px 12px;
+    background: #f7f8fa;
+    border-bottom: 1px solid #ccd0da;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4a5268;
+  }
+  .other-list { list-style: none; }
+  .other-list li {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f4;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111318;
+  }
+  .other-list li:last-child { border-bottom: none; }
+  .other-list li::before {
+    content: '→';
+    color: #8a93a8;
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 3px;
+  }
+
+  @media (max-width: 860px) {
+    .content-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚕ Heme-Onc Ref</div>
+  <div class="controls">
+    <button class="specialty-btn" id="btn-heme" onclick="setSpecialty('hematology')">🩸 Hematology</button>
+    <button class="specialty-btn" id="btn-onc"  onclick="setSpecialty('oncology')">🔬 Oncology</button>
+    <span class="hdr-div">|</span>
+    <select id="condition-select" onchange="setCondition(this.value)">
+      <option value="">— select a problem —</option>
+    </select>
+  </div>
+</header>
+
+<div id="empty-state">
+  <div class="icon">🩺</div>
+  <h2>Select a specialty and problem</h2>
+  <p>Use the buttons and dropdown above to load a reference card</p>
+</div>
+
+<div id="main-content">
+  <div class="condition-title" id="condition-title"></div>
+
+  <div class="content-grid">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <div class="section-card">
+        <div class="section-header">
+          <span>📋</span>
+          <h3>History</h3>
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="history-quick-btn" onclick="setMode('history','quick')">Quick</button>
+            <button class="mode-btn"        id="history-full-btn"  onclick="setMode('history','full')">Full</button>
+          </div>
+          <button class="reset-btn" onclick="resetSection('history')">Reset</button>
+        </div>
+        <ul class="checklist" id="history-list"></ul>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <span>🔍</span>
+          <h3>Examination</h3>
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="exam-quick-btn" onclick="setMode('exam','quick')">Quick</button>
+            <button class="mode-btn"        id="exam-full-btn"  onclick="setMode('exam','full')">Full</button>
+          </div>
+          <button class="reset-btn" onclick="resetSection('exam')">Reset</button>
+        </div>
+        <ul class="checklist" id="exam-list"></ul>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <span>💡</span>
+          <h3>Considerations</h3>
+        </div>
+        <ul class="bullet-list" id="considerations-list"></ul>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <div class="panel-label">🔬 Labs to Order</div>
+
+      <div class="copy-box">
+        <div class="copy-box-header">Copy to Requisition</div>
+        <div class="lab-text" id="lab-text"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyLabs()">
+          <span>📋</span><span id="copy-label">Copy Labs</span>
+        </button>
+      </div>
+
+      <div class="other-box">
+        <div class="other-box-header">Imaging &amp; Other Investigations</div>
+        <ul class="other-list" id="other-list"></ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ── STATE ──────────────────────────────────────────────────────
+let currentCondition = null;
+let modes = { history: 'quick', exam: 'quick' };
+let checked = { history: new Set(), exam: new Set() };
+
+// ── SPECIALTY / CONDITION SELECTION ───────────────────────────
+window.setSpecialty = function(specialty) {
+  document.getElementById('btn-heme').className = 'specialty-btn' + (specialty === 'hematology' ? ' active-heme' : '');
+  document.getElementById('btn-onc').className  = 'specialty-btn' + (specialty === 'oncology'    ? ' active-onc'  : '');
+  const sel = document.getElementById('condition-select');
+  sel.innerHTML = '<option value="">— select a problem —</option>';
+  conditions.filter(c => c.specialty === specialty).forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.id; o.textContent = c.label; sel.appendChild(o);
+  });
+  sel.value = '';
+  showEmpty();
+};
+
+window.setCondition = function(id) {
+  if (!id) { showEmpty(); return; }
+  currentCondition = conditions.find(c => c.id === id);
+  if (!currentCondition) { showEmpty(); return; }
+  // Bookmark this condition so it reopens on next visit
+  localStorage.setItem('lastCondition', JSON.stringify({
+    specialty: currentCondition.specialty,
+    id: currentCondition.id,
+  }));
+  checked = { history: new Set(), exam: new Set() };
+  modes = { history: 'quick', exam: 'quick' };
+  render();
+};
+
+// ── RENDER ─────────────────────────────────────────────────────
+function render() {
+  const c = currentCondition;
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+
+  const isHeme = c.specialty === 'hematology';
+  document.getElementById('condition-title').innerHTML =
+    `${c.label} <span class="specialty-tag ${isHeme ? 'tag-heme' : 'tag-onc'}">${isHeme ? 'Hematology' : 'Oncology'}</span>`;
+
+  renderChecklist('history-list', c.history[modes.history], 'history');
+  renderChecklist('exam-list',    c.exam[modes.exam],       'exam');
+
+  ['history', 'exam'].forEach(sec => {
+    document.getElementById(`${sec}-quick-btn`).className = 'mode-btn' + (modes[sec] === 'quick' ? ' active' : '');
+    document.getElementById(`${sec}-full-btn`).className  = 'mode-btn' + (modes[sec] === 'full'  ? ' active' : '');
+  });
+
+  document.getElementById('considerations-list').innerHTML =
+    c.considerations.map(t => `<li><span>${t}</span></li>`).join('');
+
+  document.getElementById('lab-text').textContent = c.labs.copyable.join(', ');
+
+  document.getElementById('other-list').innerHTML =
+    c.labs.other.map(t => `<li>${t}</li>`).join('');
+
+  resetCopyBtn();
+  window.scrollTo(0, 0);
+}
+
+function renderChecklist(listId, items, section) {
+  document.getElementById(listId).innerHTML = items.map((item, i) => `
+    <li class="${checked[section].has(i) ? 'checked' : ''}" onclick="toggle('${section}',${i})">
+      <div class="checkbox"></div>
+      <span class="item-text">${item}</span>
+    </li>`).join('');
+}
+
+// ── INTERACTIONS ───────────────────────────────────────────────
+window.toggle = function(section, i) {
+  checked[section].has(i) ? checked[section].delete(i) : checked[section].add(i);
+  renderChecklist(section === 'history' ? 'history-list' : 'exam-list',
+    currentCondition[section][modes[section]], section);
+};
+
+window.resetSection = function(section) {
+  checked[section] = new Set();
+  renderChecklist(section === 'history' ? 'history-list' : 'exam-list',
+    currentCondition[section][modes[section]], section);
+};
+
+window.setMode = function(section, mode) {
+  modes[section] = mode;
+  checked[section] = new Set();
+  renderChecklist(section === 'history' ? 'history-list' : 'exam-list',
+    currentCondition[section][mode], section);
+  document.getElementById(`${section}-quick-btn`).className = 'mode-btn' + (mode === 'quick' ? ' active' : '');
+  document.getElementById(`${section}-full-btn`).className  = 'mode-btn' + (mode === 'full'  ? ' active' : '');
+};
+
+window.copyLabs = function() {
+  if (!currentCondition) return;
+  navigator.clipboard.writeText(currentCondition.labs.copyable.join(', ')).then(() => {
+    document.getElementById('copy-btn').classList.add('copied');
+    document.getElementById('copy-label').textContent = '✓ Copied!';
+    setTimeout(resetCopyBtn, 2000);
+  });
+};
+
+function resetCopyBtn() {
+  document.getElementById('copy-btn').classList.remove('copied');
+  document.getElementById('copy-label').textContent = 'Copy Labs';
+}
+
+function showEmpty() {
+  document.getElementById('empty-state').style.display = 'flex';
+  document.getElementById('main-content').style.display = 'none';
+}
+
+// ── RESTORE LAST SESSION ───────────────────────────────────────
+(function restoreBookmark() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('lastCondition'));
+    if (!saved || !saved.specialty || !saved.id) return;
+    setSpecialty(saved.specialty);
+    const sel = document.getElementById('condition-select');
+    if (sel.querySelector(`option[value="${saved.id}"]`)) {
+      sel.value = saved.id;
+      setCondition(saved.id);
+    }
+  } catch (_) {}
+})();
+</script>
+</body>
+</html>
