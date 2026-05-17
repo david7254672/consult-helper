@@ -4,7 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A static, single-page clinical reference tool for outpatient hematology and oncology consultations. No build step, no framework, no dependencies — just two files served as plain HTML + JS.
+A static, single-page clinical reference tool for **outpatient** hematology and oncology consultations. No build step, no framework, no dependencies — just two files served as plain HTML + JS.
+
+## GitHub
+
+- Repo: https://github.com/david7254672/consult-helper
+- Pages (live site): https://david7254672.github.io/consult-helper/
+- Git identity configured locally: `david` / `david@local`
 
 ## Local preview
 
@@ -51,7 +57,8 @@ All clinical content lives in `data.js`. The app shell (`index.html`) never need
 
 ## Content conventions
 
-- This is an **outpatient** consultation tool. Differentials, investigation lists, and urgency language should reflect an ambulatory setting. True emergencies (TTP, cord compression, leukostasis, acute leukemia) should still be flagged clearly, but the default framing is "workup to initiate at this visit."
+- This is an **outpatient** consultation tool. Differentials, investigation lists, and urgency language should reflect an ambulatory setting — patients are seen in clinic, not admitted. True emergencies (TTP, cord compression, leukostasis, acute leukemia) should still be flagged clearly with same-day action language, but the default framing is "workup to initiate at this visit or arrange shortly after."
+- Avoid inpatient-centric language (daily monitoring, nursing checks, stat orders) unless describing a red flag that warrants ED referral.
 - `history.quick` — short, negative-framed bullets ("No fevers…") for at-a-glance pre-consult review
 - `history.full` — comprehensive positive-framed questions with clinical reasoning, for thorough clerking
 - `labs.copyable` — terse test names only, no explanatory text (they get pasted directly into a lab requisition)
