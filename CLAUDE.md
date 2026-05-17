@@ -29,6 +29,15 @@ bash deploy.sh
 
 First-time setup is documented in README.md.
 
+**When working in a git worktree**, `deploy.sh` will fail (`ERROR: Not a git repository`) because worktrees have a `.git` file rather than a directory. Instead:
+
+```bash
+# 1. Commit in the worktree as normal, then from the main repo:
+cd "/Users/david/Desktop/Claude Code/Consult Helper"
+git merge <worktree-branch>
+git push
+```
+
 ## Architecture
 
 All clinical content lives in `data.js`. The app shell (`index.html`) never needs to be edited to add or change conditions.
