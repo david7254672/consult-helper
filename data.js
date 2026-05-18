@@ -26,7 +26,7 @@ var conditions = [
       quick: [
         "Duration — incidental vs symptomatic; prior CBC values if available",
         "Symptoms: fatigue, exertional dyspnea, palpitations, lightheadedness, new or worsening angina",
-        "No melena, hematochezia, or unexplained weight loss",
+        "No melena, hematochezia, hematuria, or unexplained weight loss",
         "No dietary restrictions or risk factors for B12 deficiency (vegan/poor diet, metformin, gastric surgery, achlorhydria)",
         "No medications: methotrexate, sulfonamides, PPIs or H2-blockers (iron/B12 absorption), NSAIDs/anticoagulants (GI loss)",
         "No known CKD, inflammatory condition, or prior malignancy",
@@ -37,13 +37,14 @@ var conditions = [
         "Symptoms of anemia and functional impact: fatigue, exertional dyspnea, palpitations, lightheadedness, new or worsening angina, falls, cognitive decline, reduced exercise tolerance",
         "Duration and trend — stable vs progressive; prior CBC values are essential",
         "GI symptoms: melena, bright red rectal bleeding, change in bowel habit, abdominal pain, weight loss",
+        "Urinary bleeding: gross or microscopic hematuria (bladder cancer, renal cell carcinoma, urologic source of iron deficiency — particularly in elderly men)",
+        "Constitutional symptoms: night sweats, weight loss, fevers, bone pain (MDS, lymphoma, myeloma)",
         "Dietary history: red meat intake, B12 sources (eggs, dairy, meat); leafy greens for folate; alcohol use",
         "B12 deficiency risk factors: vegan/poor diet, achlorhydria (common in elderly), metformin use, prior gastric surgery, pernicious anemia",
-        "Medications: metformin (B12 malabsorption), PPIs/H2-blockers (B12 and iron absorption impaired), NSAIDs/anticoagulants (GI blood loss), methotrexate (folate antagonist)",
+        "Medications: metformin (B12 malabsorption), PPIs/H2-blockers (B12 and iron absorption impaired), NSAIDs/anticoagulants (GI blood loss), methotrexate (folate antagonist); medications known to cause hemolytic anemia: dapsone, methyldopa, penicillins, cephalosporins, nitrofurantoin, ribavirin, hydroxychloroquine",
         "CKD history: GFR trend — EPO deficiency is the primary mechanism in eGFR <30",
         "Inflammatory or chronic disease: RA, IBD, malignancy, recurrent infection (anemia of chronic disease/inflammation)",
         "Prior malignancy history (marrow infiltration, chemotherapy effects, anemia of chronic disease)",
-        "Constitutional symptoms: night sweats, weight loss, fevers, bone pain (MDS, lymphoma, myeloma)",
         "Thyroid symptoms: fatigue, cold intolerance, constipation, weight gain (hypothyroidism → macrocytic anemia)",
         "Prior GI investigations: colonoscopy, gastroscopy — dates, findings",
         "Family history of thalassemia or hemolytic anemia",
@@ -86,7 +87,7 @@ var conditions = [
       "Erythropoiesis-stimulating agents (ESAs): not recommended empirically without confirmed EPO-deficient anemia (CKD); coordinate with nephrology if applicable",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","ferritin","serum iron","TIBC","transferrin saturation","B12","folate","methylmalonic acid","homocysteine","creatinine (eGFR)","ALT","AST","ALK phos","bili","albumin","TSH","LDH","haptoglobin","Coombs (DAT)","ESR","CRP","SPEP","serum free light chains (kappa and lambda)","tissue transglutaminase IgA","total IgA"],
+      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","ferritin","serum iron","TIBC","transferrin saturation","B12","creatinine (eGFR)","ALT","AST","ALK phos","bili","albumin","TSH","LDH","haptoglobin","Coombs (DAT)","CRP","SPEP","serum free light chains (kappa and lambda)"],
       other: [
         "Colonoscopy ± gastroscopy (mandatory in elderly with iron deficiency or unexplained GI blood loss)",
         "Bone marrow aspirate and trephine biopsy with cytogenetics (if MDS, aplastic anemia, or marrow infiltration suspected)",
@@ -163,7 +164,7 @@ var conditions = [
       "Normal labs with easy bruising: consider Ehlers-Danlos, SSRI use, or skin fragility without a systemic coagulopathy",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","PT/INR","PTT","thrombin time","fibrinogen","von Willebrand antigen","von Willebrand activity (ristocetin cofactor)","factor VIII activity","factor IX activity","creatinine","ALT","AST","ALK phos","bili","albumin","TSH","vitamin C level","SPEP","serum free light chains (kappa and lambda)"],
+      copyable: ["CBC","hematopathologist blood film review","PT/INR","PTT","von Willebrand antigen","von Willebrand activity (ristocetin cofactor)","factor VIII activity","creatinine","ALT","ALK phos","bili","albumin","TSH","SPEP","serum free light chains (kappa and lambda)"],
       other: [
         "Platelet aggregation studies (LTA or Multiplate) — if platelet dysfunction suspected with normal platelet count",
         "Mixing study — if isolated PTT prolongation (distinguishes inhibitor from factor deficiency)",
@@ -233,7 +234,7 @@ var conditions = [
       "Phlebotomy in confirmed hemochromatosis — target ferritin <50, TSAT <30%",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","ferritin","serum iron","TIBC","transferrin saturation","ALT","AST","ALK phos","bili","GGT","albumin","INR","creatinine","glucose","triglycerides","HbA1c","HFE gene testing (C282Y, H63D)","ANA","anti-smooth muscle Ab","ceruloplasmin"],
+      copyable: ["CBC","ferritin","serum iron","TIBC","transferrin saturation","ALT","AST","ALK phos","bili","GGT","albumin","creatinine","glucose","HbA1c"],
       other: [
         "Liver ultrasound (steatosis, cirrhosis, HCC screening)",
         "FibroScan / liver elastography if cirrhosis assessment needed",
@@ -308,8 +309,10 @@ var conditions = [
       "Bone marrow biopsy: required if clonal cause suspected (eosinophilia >1.5 unexplained, abnormal flow, cytogenetics, or clinical features of MPN/lymphoma)",
     ],
     labs: {
-      copyable: ["CBC with differential","hematopathologist blood film review","creatinine","ALT","AST","ALK phos","bili","LDH","ESR","CRP","IgE (total)","troponin","tryptase","ANA","ANCA (cANCA/pANCA)","JAK2 V617F mutation","BCR-ABL quantitative PCR","flow cytometry peripheral blood","Strongyloides serology","Toxocara serology","morning cortisol","TSH"],
+      copyable: ["CBC with differential","hematopathologist blood film review","creatinine","ALT","AST","ALK phos","bili","LDH","ESR","CRP","IgE (total)","troponin","tryptase","ANA","ANCA (cANCA/pANCA)","immunophenotyping peripheral blood lymphocytes (lymphoma panel)","Strongyloides serology","morning cortisol","TSH"],
       other: [
+        "JAK2 V617F mutation (if eosinophilia >1.5 × 10⁹/L with no reactive cause — clonal/MPN evaluation)",
+        "BCR-ABL quantitative PCR (if eosinophilia >1.5 × 10⁹/L with no reactive cause — CML evaluation)",
         "FIP1L1-PDGFRA FISH (on peripheral blood or bone marrow — clonal eosinophilia/CEL)",
         "PDGFRB and FGFR1 rearrangements by FISH (if bone marrow biopsy performed)",
         "Bone marrow aspirate and trephine biopsy with cytogenetics (if clonal cause suspected)",
@@ -530,8 +533,10 @@ var conditions = [
       "Leukostasis: if WBC >100×10⁹/L with symptoms (hypoxia, confusion, priapism) — refer to ED immediately; leukapheresis and cytoreduction require inpatient management",
     ],
     labs: {
-      copyable: ["CBC with differential","hematopathologist blood film review","reticulocyte count","creatinine","ALT","ALK phos","bili","LDH","uric acid","B12 (elevated in CML/MPN)","ESR","CRP","ferritin","BCR-ABL quantitative PCR","JAK2 V617F mutation","flow cytometry peripheral blood","EBV VCA IgM/IgG","CMV IgM/IgG","TSH"],
+      copyable: ["CBC with differential","hematopathologist blood film review","reticulocyte count","creatinine","ALT","ALK phos","bili","LDH","uric acid","B12 (elevated in CML/MPN)","ESR","CRP","ferritin","flow cytometry peripheral blood","EBV VCA IgM/IgG","CMV IgM/IgG","TSH"],
       other: [
+        "BCR-ABL quantitative PCR (if CML suspected — marked leukocytosis with basophilia, eosinophilia, or left shift)",
+        "JAK2 V617F mutation (if MPN suspected — neutrophilia with splenomegaly and no reactive cause)",
         "CT chest/abdomen/pelvis if lymphadenopathy or organomegaly on exam",
         "Bone marrow aspirate and trephine biopsy with cytogenetics (if primary hematologic process suspected)",
         "Echocardiogram if eosinophilia >1.5×10⁹/L (hypereosinophilic syndrome — screen for cardiac involvement)",
@@ -1807,36 +1812,36 @@ var conditions = [
     history: {
       quick: [
         "No prior TURBT history or intravesical therapy",
-        "No hematuria or irritative voiding symptoms currently",
-        "No smoking history or occupational exposures documented",
         "BCG treatment history and response not yet reviewed",
+        "No smoking history or occupational exposures documented",
         "No prior pelvic radiation",
+        "No hematuria or irritative voiding symptoms currently",
         "Risk stratification not yet completed",
       ],
       full: [
-        "Hematuria: gross vs. microscopic, painless or associated with dysuria, duration, recurrence pattern",
-        "Irritative voiding symptoms: frequency, urgency, dysuria, nocturia — may suggest CIS",
+        "Initial presentation review: date of first diagnosis, presenting symptom (hematuria, incidental finding), initial cystoscopy findings, pathology of first TURBT (stage, grade, CIS), and staging at diagnosis",
         "Prior TURBT history: number of procedures, dates, stage and grade at each resection (Ta low-grade, Ta high-grade, T1, CIS), completeness of resection",
         "Prior intravesical therapy: BCG (induction ×6 weeks — was it completed? Maintenance — how many years/courses?), BCG response vs. recurrence vs. non-response, BCG tolerance (granulomatous cystitis, BCG sepsis)",
         "Prior intravesical chemotherapy: mitomycin C (immediate post-TURBT instillation vs. full course), gemcitabine",
         "BCG-unresponsive features: persistent/recurrent CIS or T1HG within 6 months of adequate BCG (≥5/6 induction + ≥2/3 maintenance doses at 3 months) — key definition",
+        "Irritative voiding symptoms: frequency, urgency, dysuria, nocturia — may suggest CIS",
         "Smoking history: pack-years, current vs. ex-smoker — bladder cancer risk factor; cessation reduces recurrence risk",
         "Occupational exposures: arylamines (rubber, dye, textile industry — aromatic amines), benzene — duration and last exposure",
         "Prior pelvic radiation (increases risk of radiation-induced urothelial changes and secondary cancers)",
         "Surveillance cystoscopy schedule and compliance",
         "Upper tract symptoms: flank pain, hematuria with no lower tract source — upper tract urothelial carcinoma risk especially with high-grade disease",
+        "Urinary continence: any stress or urge incontinence, pad use, prior continence procedures — relevant if cystectomy is being considered",
+        "General functioning and frailty: exercise tolerance, falls, ADLs, comorbidities — informs tolerance of intravesical therapy, TURBT, or radical cystectomy",
+        "Hematuria: gross vs. microscopic, painless or associated with dysuria, duration, recurrence pattern",
         "Family history: Lynch syndrome–associated cancers (CRC, endometrial, urothelial, gastric, ovarian)",
       ],
     },
     exam: {
       quick: [
         "ECOG PS not formally assessed — usually good for NMIBC patients",
-        "Abdominal and bimanual exam usually non-informative for NMIBC",
       ],
       full: [
         "ECOG performance status",
-        "Abdominal exam: suprapubic tenderness (cystitis), palpable bladder (retention), prior surgical scars",
-        "Bimanual examination: generally not informative for NMIBC; done at TURBT under anesthesia for staging",
         "General assessment: frailty, comorbidities relevant to intravesical or systemic therapy",
       ],
     },
@@ -2036,15 +2041,10 @@ var conditions = [
       ],
     },
     considerations: [
-      "Molecular profile is essential before first-line therapy and should be obtained urgently: RAS (KRAS/NRAS exons 2/3/4), BRAF V600E, MSI/dMMR, HER2 amplification — these drive regimen selection",
-      "MSI-H/dMMR (~5% of metastatic CRC): pembrolizumab monotherapy first-line is superior to chemotherapy (KEYNOTE-177) — also has implications for Lynch syndrome evaluation",
-      "RAS/BRAF wild-type + left-sided primary (splenic flexure to rectum): FOLFOX or FOLFIRI + anti-EGFR (cetuximab or panitumumab) is preferred first-line for superior response and OS",
-      "RAS-mutant or right-sided primary: FOLFOX or FOLFIRI + bevacizumab; anti-EGFR therapy is ineffective in RAS-mutant disease",
-      "BRAF V600E–mutant (~10%): aggressive biology with poor prognosis on chemotherapy alone; encorafenib + cetuximab ± binimetinib is approved second-line; consider clinical trial or BRAF-directed approach earlier",
-      "HER2-amplified (~3–4%): trastuzumab-based combinations (tucatinib + trastuzumab, or fam-trastuzumab deruxtecan) — emerging targeted options",
-      "Liver-limited metastases: resectability assessment at multidisciplinary tumour board — conversion chemotherapy may render borderline-resectable disease operable; hepatic arterial infusion pump in selected high-volume centres",
-      "Peritoneal metastases: generally poor prognosis; HIPEC in highly selected patients at experienced centres",
-      "MSI-H metastatic CRC should trigger Lynch syndrome evaluation regardless of patient age — germline MLH1/MSH2/MSH6/PMS2 testing; refer genetics",
+      "BC Hereditary Cancer Program referral criteria — refer if any of the following: CRC diagnosed at age ≤50; MMR-deficient tumour (loss of MLH1, MSH2, MSH6, or PMS2 on IHC) regardless of age; ≥2 Lynch-associated cancers in the patient (CRC, endometrial, ovarian, gastric, upper urinary tract, small bowel, sebaceous neoplasms); ≥1 first-degree relative with a Lynch-associated cancer, especially at young age; ≥10 synchronous or cumulative colorectal adenomatous polyps (raises FAP or MUTYH-associated polyposis); known pathogenic germline variant in the family",
+      "MSI-H/dMMR tumours: refer genetics regardless of age — Lynch syndrome evaluation required even in advanced/metastatic setting",
+      "MUTYH-associated polyposis: biallelic MUTYH mutations cause attenuated or classic polyposis — consider if 10–100 adenomas without APC mutation; autosomal recessive inheritance pattern",
+      "POLE/POLD1 mutations: cause ultramutated CRC with MSS-like IHC but high TMB — specialized germline testing warranted in young patients or those with unusual tumour features",
     ],
     labs: {
       copyable: ["CBC", "creatinine", "electrolytes", "ALT", "AST", "ALK phos", "bili", "albumin", "LDH", "CEA"],
