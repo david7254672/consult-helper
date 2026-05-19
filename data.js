@@ -385,8 +385,9 @@ var conditions = [
       "Consider indefinite anticoagulation for unprovoked proximal DVT/PE with low bleeding risk — discuss risk-benefit explicitly",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","creatinine","ALT","ALK phos","bili","INR","PTT","antiphospholipid Ab panel (lupus anticoagulant, anticardiolipin IgG/IgM, anti-beta2-GP1 IgG/IgM)","Factor V Leiden mutation (PCR)","Prothrombin G20210A mutation (PCR)","Protein C activity","Protein S activity (free antigen)","Antithrombin activity","homocysteine","JAK2 V617F mutation","SPEP","LDH","uric acid","ESR","CRP","urinalysis"],
+      copyable: ["CBC","hematopathologist blood film review","creatinine","ALT","ALK phos","bili","INR","PTT","antiphospholipid Ab panel (lupus anticoagulant, anticardiolipin IgG/IgM, anti-beta2-GP1 IgG/IgM)","Factor V Leiden mutation (PCR)","Prothrombin G20210A mutation (PCR)","Protein C activity","Protein S activity (free antigen)","Antithrombin activity","SPEP","LDH","uric acid","CRP","urinalysis"],
       other: [
+        "JAK2 V617F mutation (if unusual-site thrombosis — splanchnic vein, cerebral sinus, or hepatic vein — MPN is a leading cause and is treatable)",
         "Doppler ultrasound lower limbs (DVT confirmation and extent)",
         "CT pulmonary angiography (PE diagnosis) or V/Q scan if contrast contraindicated",
         "CT abdomen/pelvis with IV contrast (malignancy screening for unprovoked VTE; splanchnic vein thrombosis assessment)",
@@ -757,8 +758,10 @@ var conditions = [
       "Alcohol: direct marrow toxicity + nutritional folate deficiency + liver disease all contribute; MCV may remain elevated for months after abstinence",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","B12","folate (RBC and serum)","methylmalonic acid","homocysteine","anti-intrinsic factor antibody","anti-parietal cell antibody","ferritin","serum iron","TIBC","TSH","creatinine","ALT","AST","ALK phos","GGT","bili","albumin","INR","LDH","haptoglobin","Coombs (DAT)","ESR","CRP","ANA"],
+      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","B12","folate (RBC and serum)","ferritin","serum iron","TIBC","TSH","creatinine","ALT","AST","ALK phos","GGT","bili","albumin","INR","LDH","haptoglobin","Coombs (DAT)","CRP"],
       other: [
+        "Methylmalonic acid (MMA) and homocysteine (if B12 borderline 150–300 pmol/L — both elevated in B12 deficiency; MMA elevated in B12 but not folate deficiency)",
+        "Anti-intrinsic factor antibody and anti-parietal cell antibody (if pernicious anemia suspected — positive anti-IF Ab is highly specific and diagnostic)",
         "Bone marrow aspirate and trephine biopsy with cytogenetics (if MDS suspected — unexplained macrocytic anemia, additional cytopenias, dysplastic features on film)",
         "Gastroscopy (if pernicious anemia confirmed — screen for gastric atrophy and associated gastric carcinoid/adenocarcinoma risk)",
         "Celiac serology: tissue transglutaminase IgA + total IgA (if folate deficiency without clear dietary cause)",
@@ -1283,8 +1286,11 @@ var conditions = [
       "Vaccination required pre-splenectomy if heading that direction (pneumococcus, meningococcus, Hib)",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","Coombs (DAT)","LDH","haptoglobin","bili (total and direct)","creatinine","ALT","AST","ALK phos","GGT","albumin","INR","ferritin","B12","uric acid","JAK2 V617F mutation","CALR mutation","MPL mutation","BCR-ABL quantitative PCR","EBV VCA IgM/IgG","CMV IgM/IgG","beta-glucocerebrosidase enzyme assay","flow cytometry peripheral blood","ESR","CRP"],
+      copyable: ["CBC","hematopathologist blood film review","reticulocyte count","Coombs (DAT)","LDH","haptoglobin","bili (total and direct)","creatinine","ALT","AST","ALK phos","GGT","albumin","INR","ferritin","B12","uric acid","EBV VCA IgM/IgG","CMV IgM/IgG","flow cytometry peripheral blood","CRP"],
       other: [
+        "JAK2 V617F mutation, CALR mutation, MPL mutation (if MPN suspected — splenomegaly with erythrocytosis, thrombocytosis, or leukocytosis without reactive cause)",
+        "BCR-ABL quantitative PCR (if CML suspected — massive splenomegaly with leukocytosis and left shift)",
+        "Beta-glucocerebrosidase enzyme assay (if Gaucher disease suspected — young patient with massive splenomegaly ± thrombocytopenia ± bone pain)",
         "Ultrasound abdomen with Doppler (spleen size, liver texture, portal/splenic vein patency, ascites)",
         "CT abdomen/pelvis with IV contrast (lymphadenopathy, vascular anatomy)",
         "PET-CT if lymphoma suspected",
@@ -1503,8 +1509,9 @@ var conditions = [
       "Bone marrow biopsy: required to confirm ET diagnosis and distinguish from pre-fibrotic myelofibrosis — hematology to arrange",
     ],
     labs: {
-      copyable: ["CBC","hematopathologist blood film review","ferritin","serum iron","TIBC","transferrin saturation","JAK2 V617F mutation","CALR mutation","MPL mutation","BCR-ABL quantitative PCR","LDH","uric acid","CRP","ESR","creatinine","ALT","ALK phos","bili","von Willebrand antigen","von Willebrand activity (ristocetin cofactor)"],
+      copyable: ["CBC","hematopathologist blood film review","ferritin","serum iron","TIBC","transferrin saturation","JAK2 V617F mutation","CALR mutation","MPL mutation","LDH","uric acid","CRP","creatinine","ALT","ALK phos","bili","von Willebrand antigen","von Willebrand activity (ristocetin cofactor)"],
       other: [
+        "BCR-ABL quantitative PCR (to exclude CML — can present with isolated thrombocytosis without marked leukocytosis)",
         "Bone marrow aspirate and trephine biopsy with cytogenetics (required to confirm ET diagnosis — hematology to arrange)",
         "CT abdomen/pelvis if splenomegaly, lymphadenopathy, or occult malignancy suspected",
         "Abdominal ultrasound with Doppler if unusual-site thrombosis suspected (portal, splenic, hepatic veins — MPN)",
@@ -1579,8 +1586,9 @@ var conditions = [
       "Subsegmental PE in isolation: anticoagulation vs surveillance imaging is a shared decision — consider clot burden, patient symptoms, cardiopulmonary reserve, and bleeding risk",
     ],
     labs: {
-      copyable: ["CBC","creatinine","ALT","ALK phos","bili","INR","PTT","antiphospholipid Ab panel (lupus anticoagulant, anticardiolipin IgG/IgM, anti-beta2-GP1 IgG/IgM)","Factor V Leiden mutation (PCR)","Prothrombin G20210A mutation (PCR)","JAK2 V617F mutation","Protein C activity","Protein S activity (free antigen)","Antithrombin activity","homocysteine","SPEP","urinalysis","ESR","CRP"],
+      copyable: ["CBC","creatinine","ALT","ALK phos","bili","INR","PTT","antiphospholipid Ab panel (lupus anticoagulant, anticardiolipin IgG/IgM, anti-beta2-GP1 IgG/IgM)","Factor V Leiden mutation (PCR)","Prothrombin G20210A mutation (PCR)","Protein C activity","Protein S activity (free antigen)","Antithrombin activity","SPEP","urinalysis","CRP"],
       other: [
+        "JAK2 V617F mutation (if unusual-site thrombosis — splanchnic vein, cerebral sinus, hepatic vein — or unexplained thrombocytosis or erythrocytosis alongside VTE)",
         "Doppler ultrasound lower limbs (DVT extent — document for anticoagulation duration and recurrence baseline)",
         "CT pulmonary angiography (PE diagnosis and clot burden) or V/Q scan if contrast contraindicated",
         "Echocardiogram (right heart strain in submassive PE; repeat at 3–6 months to screen for chronic thromboembolic pulmonary hypertension)",
