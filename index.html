@@ -465,8 +465,12 @@ function render() {
   document.getElementById('main-content').style.display = 'block';
 
   const isHeme = c.specialty === 'hematology';
-  document.getElementById('condition-title').innerHTML =
-    `${c.label} <span class="specialty-tag ${isHeme ? 'tag-heme' : 'tag-onc'}">${isHeme ? 'Hematology' : 'Oncology'}</span>`;
+  const titleEl = document.getElementById('condition-title');
+  titleEl.textContent = c.label + ' ';
+  const tag = document.createElement('span');
+  tag.className = 'specialty-tag ' + (isHeme ? 'tag-heme' : 'tag-onc');
+  tag.textContent = isHeme ? 'Hematology' : 'Oncology';
+  titleEl.appendChild(tag);
 
   renderChecklist('history-list', c.history[modes.history], 'history');
   renderChecklist('exam-list',    c.exam[modes.exam],       'exam');
@@ -476,24 +480,47 @@ function render() {
     document.getElementById(`${sec}-full-btn`).className  = 'mode-btn' + (modes[sec] === 'full'  ? ' active' : '');
   });
 
-  document.getElementById('considerations-list').innerHTML =
-    c.considerations.map(t => `<li><span>${t}</span></li>`).join('');
+  replaceChildrenWithList('considerations-list', c.considerations, item => {
+    const span = document.createElement('span');
+    span.textContent = item;
+    return [span];
+  });
 
   document.getElementById('lab-text').textContent = c.labs.copyable.join(', ');
 
-  document.getElementById('other-list').innerHTML =
-    c.labs.other.map(t => `<li>${t}</li>`).join('');
+  replaceChildrenWithList('other-list', c.labs.other, item => {
+    return [document.createTextNode(item)];
+  });
 
   resetCopyBtn();
   window.scrollTo(0, 0);
 }
 
 function renderChecklist(listId, items, section) {
-  document.getElementById(listId).innerHTML = items.map((item, i) => `
-    <li class="${checked[section].has(i) ? 'checked' : ''}" onclick="toggle('${section}',${i})">
-      <div class="checkbox"></div>
-      <span class="item-text">${item}</span>
-    </li>`).join('');
+  const list = document.getElementById(listId);
+  list.replaceChildren();
+  items.forEach((item, i) => {
+    const li = document.createElement('li');
+    if (checked[section].has(i)) li.className = 'checked';
+    li.addEventListener('click', () => toggle(section, i));
+    const box = document.createElement('div');
+    box.className = 'checkbox';
+    const span = document.createElement('span');
+    span.className = 'item-text';
+    span.textContent = item;
+    li.append(box, span);
+    list.appendChild(li);
+  });
+}
+
+function replaceChildrenWithList(listId, items, makeChildren) {
+  const list = document.getElementById(listId);
+  list.replaceChildren();
+  items.forEach(item => {
+    const li = document.createElement('li');
+    makeChildren(item).forEach(n => li.appendChild(n));
+    list.appendChild(li);
+  });
 }
 
 // ── INTERACTIONS ───────────────────────────────────────────────

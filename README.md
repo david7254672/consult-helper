@@ -7,7 +7,7 @@ A static, mobile-friendly bedside reference for hematology and oncology consults
 | File | Purpose |
 |------|---------|
 | `index.html` | App shell — all CSS and JS logic. Never needs editing to add content. |
-| `data.js` | All clinical content as an ES module. **Only file you ever edit.** |
+| `data.js` | All clinical content as a global `var conditions` array. **Only file you ever edit.** |
 
 ## Adding a new condition
 
@@ -21,7 +21,7 @@ Save. Done.
 
 ## Local preview
 
-Because `index.html` uses an ES module (`import` from `data.js`), browsers block it over `file://`. Use a local server:
+`index.html` loads `data.js` via a plain `<script>` tag, so opening the file directly over `file://` works in most browsers. For parity with the deployed environment, use a local server:
 
 ```bash
 cd "/Users/david/Desktop/Claude Code/Consult Helper"

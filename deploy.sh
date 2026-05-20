@@ -15,7 +15,7 @@
 # ─────────────────────────────────────────────────────────────
 set -e
 
-if [ ! -d .git ]; then
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo ""
   echo "ERROR: Not a git repository."
   echo "Run these first:"

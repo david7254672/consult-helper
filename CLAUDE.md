@@ -19,7 +19,7 @@ python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-The app cannot be opened via `file://` (the browser blocks cross-file JS loads). Always use a local server or GitHub Pages.
+`index.html` loads `data.js` via a plain `<script src="data.js">` tag, so opening `index.html` directly over `file://` works in most browsers. A local server is recommended for parity with the GitHub Pages environment.
 
 ## Deploying to GitHub Pages
 
@@ -27,16 +27,7 @@ The app cannot be opened via `file://` (the browser blocks cross-file JS loads).
 bash deploy.sh
 ```
 
-First-time setup is documented in README.md.
-
-**When working in a git worktree**, `deploy.sh` will fail (`ERROR: Not a git repository`) because worktrees have a `.git` file rather than a directory. Instead:
-
-```bash
-# 1. Commit in the worktree as normal, then from the main repo:
-cd "/Users/david/Desktop/Claude Code/Consult Helper"
-git merge <worktree-branch>
-git push
-```
+First-time setup is documented in README.md. `deploy.sh` works inside git worktrees as well as the main checkout.
 
 ## Architecture
 
