@@ -42,7 +42,7 @@ else
   git commit -m "Update clinical reference — ${TIMESTAMP}"
 fi
 
-git push
+git push origin HEAD:main
 
 echo ""
 echo "Done. Changes are live (allow ~30 sec for GitHub Pages to rebuild)."
