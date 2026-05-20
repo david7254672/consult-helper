@@ -26,15 +26,22 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   exit 1
 fi
 
-git add index.html data.js
+# Stage any modifications/deletions to tracked files. New files still
+# need an explicit `git add <path>` once before this script will see them.
+git add -u
 
 if git diff --cached --quiet; then
-  echo "Nothing new to commit — site is already up to date."
-  exit 0
+  if [ -n "$(git log @{u}..HEAD 2>/dev/null)" ]; then
+    echo "No new changes, but pushing existing local commits..."
+  else
+    echo "Nothing new to commit — site is already up to date."
+    exit 0
+  fi
+else
+  TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
+  git commit -m "Update clinical reference — ${TIMESTAMP}"
 fi
 
-TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
-git commit -m "Update clinical reference — ${TIMESTAMP}"
 git push
 
 echo ""

@@ -335,6 +335,30 @@
   @media (max-width: 860px) {
     .content-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1400px;
+    margin: 24px auto 16px;
+    padding: 0 20px;
+    font-size: 11px;
+    color: #8a93a8;
+    text-align: right;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    header, .mode-toggle, .reset-btn, .copy-btn, #empty-state { display: none !important; }
+    #main-content { display: block !important; padding: 0; max-width: none; }
+    .content-grid { grid-template-columns: 1fr; gap: 10px; }
+    .section-card, .copy-box, .other-box { border: 1px solid #999; break-inside: avoid; }
+    .section-header, .copy-box-header, .other-box-header { background: #fff; }
+    .checklist li, .bullet-list li, .other-list li { break-inside: avoid; }
+    .checklist li.checked { opacity: 1; }
+    .checklist li.checked .item-text { text-decoration: none; }
+    footer { color: #555; }
+  }
 </style>
 </head>
 <body>
@@ -423,8 +447,42 @@
   </div>
 </div>
 
+<footer id="footer"></footer>
+
 <script src="data.js"></script>
 <script>
+// ── DATA VALIDATION (dev aid — warns in console on shape errors) ──
+(function validateConditions() {
+  if (!Array.isArray(conditions)) {
+    console.error('data.js: `conditions` is not an array');
+    return;
+  }
+  const seen = new Set();
+  conditions.forEach((c, idx) => {
+    const where = `conditions[${idx}] (${c && c.id ? c.id : 'no id'})`;
+    if (!c || typeof c !== 'object') { console.warn(where, 'is not an object'); return; }
+    ['id', 'label', 'specialty'].forEach(k => {
+      if (typeof c[k] !== 'string' || !c[k]) console.warn(where, `missing string field: ${k}`);
+    });
+    if (c.specialty !== 'hematology' && c.specialty !== 'oncology') {
+      console.warn(where, `specialty must be "hematology" or "oncology", got: ${c.specialty}`);
+    }
+    if (c.id) {
+      if (seen.has(c.id)) console.warn(where, `duplicate id: ${c.id}`);
+      seen.add(c.id);
+    }
+    ['history', 'exam'].forEach(sec => {
+      if (!c[sec] || !Array.isArray(c[sec].quick) || !Array.isArray(c[sec].full)) {
+        console.warn(where, `${sec} must have { quick: [], full: [] }`);
+      }
+    });
+    if (!Array.isArray(c.considerations)) console.warn(where, 'considerations must be an array');
+    if (!c.labs || !Array.isArray(c.labs.copyable) || !Array.isArray(c.labs.other)) {
+      console.warn(where, 'labs must have { copyable: [], other: [] }');
+    }
+  });
+})();
+
 // ── STATE ──────────────────────────────────────────────────────
 let currentCondition = null;
 let modes = { history: 'quick', exam: 'quick' };
@@ -563,6 +621,12 @@ function showEmpty() {
   document.getElementById('empty-state').style.display = 'flex';
   document.getElementById('main-content').style.display = 'none';
 }
+
+// ── FOOTER ─────────────────────────────────────────────────────
+(function renderFooter() {
+  const v = typeof DATA_VERSION === 'string' ? DATA_VERSION : null;
+  if (v) document.getElementById('footer').textContent = 'Data last reviewed: ' + v;
+})();
 
 // ── RESTORE LAST SESSION ───────────────────────────────────────
 (function restoreBookmark() {
