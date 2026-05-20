@@ -1,19 +1,18 @@
 // ============================================================
 // HEME-ONC CLINICAL REFERENCE — DATA FILE
 // ============================================================
+// Single source of truth for clinical content.
+//
 // To add a new condition: copy any existing block, change the
-// id/label/specialty/content, and save. No HTML changes needed.
+// id/label/specialty/content, save. No HTML changes needed.
 //
-// When you make meaningful content changes, bump DATA_VERSION
-// below to today's date — it's shown in the page footer so you
-// know when the reference was last reviewed.
+// Schema and content conventions are documented in CLAUDE.md
+// (Architecture and Content conventions sections). The validator
+// in index.html will warn in the console if a condition is
+// missing fields or has a duplicate id.
 //
-// history and exam each have two modes:
-//   quick: short negative-framed bullets for at-a-glance use
-//   full:  comprehensive positive-framed list with reasoning
-// labs.copyable: array of strings joined as comma-separated line
-// labs.other: imaging and other investigations (read-only list)
-// specialty: "hematology" or "oncology"
+// Bump DATA_VERSION below whenever you make non-trivial content
+// changes — it's shown in the page footer.
 // ============================================================
 
 var DATA_VERSION = "2026-05-19";
